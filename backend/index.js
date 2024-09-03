@@ -39,6 +39,18 @@ app.get('/', (req, res) => {
     res.json(summary);
 });
 
+// Ruta de login
+app.post('/api/login', (req, res) => {
+    const { username, password } = req.body;
+
+    // Autenticación básica (esto es solo un ejemplo, deberías hacer la autenticación real en producción)
+    if (username === 'admin' && password === 'admin') {
+        return res.json({ success: true, token: '1234567890' });
+    }
+
+    res.json({ success: false, message: 'Credenciales incorrectas' });
+});
+
 // Rutas para productos y movimientos
 const productRoutes = require('./routes/products');
 const movementRoutes = require('./routes/movements');

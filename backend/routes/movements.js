@@ -25,4 +25,4 @@ router.post('/', (req, res) => {
 
 // Otras rutas (opcional)...
 
-module.exports = router;
+module.exports = router

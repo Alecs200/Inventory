@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
 import ProductList from './components/ProductList';
 import ProductForm from './components/ProductForm';
 import MovementList from './components/MovementList';
 import MovementForm from './components/MovementForm';
 import Dashboard from './components/Dashboard';
+import Login from './pages/Login';
+import PrivateRoute from './components/PrivateRoute';
 import axios from 'axios';
 
 function App() {
@@ -68,25 +71,34 @@ function App() {
     };
 
     return (
-        <div className="App">
-            <h1>Sistema de Gestión de Inventario</h1>
-            <Dashboard products={products} />
-            <ProductForm
-                onProductAdded={handleProductAdded}
-                productToEdit={productToEdit}
-                onProductUpdated={handleProductUpdated}
-            />
-            <ProductList
-                products={products}
-                setProducts={setProducts}
-                onEditProduct={handleEditProduct}
-            />
-            <MovementForm
-                products={products}
-                onMovementAdded={handleMovementAdded}
-            />
-            <MovementList movements={movements} />
-        </div>
+        <Router>
+            <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route path="/" element={
+                    <PrivateRoute>
+                        <div className="App">
+                            <h1>Sistema de Gestión de Inventario</h1>
+                            <Dashboard products={products} />
+                            <ProductForm
+                                onProductAdded={handleProductAdded}
+                                productToEdit={productToEdit}
+                                onProductUpdated={handleProductUpdated}
+                            />
+                            <ProductList
+                                products={products}
+                                setProducts={setProducts}
+                                onEditProduct={handleEditProduct}
+                            />
+                            <MovementForm
+                                products={products}
+                                onMovementAdded={handleMovementAdded}
+                            />
+                            <MovementList movements={movements} />
+                        </div>
+                    </PrivateRoute>
+                } />
+            </Routes>
+        </Router>
     );
 }
 
