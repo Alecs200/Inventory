@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import './App.css';
 import ProductList from './components/ProductList';
 import ProductForm from './components/ProductForm';
@@ -15,27 +15,31 @@ function App() {
     const [productToEdit, setProductToEdit] = useState(null);
     const [movements, setMovements] = useState([]);
 
-    // Cargar los productos al inicio
-    useEffect(() => {
-        axios.get('http://localhost:5000/api/products')
-            .then(response => {
-                setProducts(response.data);
-            })
-            .catch(error => {
-                console.error('Hubo un error al obtener los productos:', error);
-            });
-    }, []);
+    const isAuthenticated = !!localStorage.getItem('token');
 
-    // Cargar los movimientos al inicio
     useEffect(() => {
-        axios.get('http://localhost:5000/api/movements')
-            .then(response => {
-                setMovements(response.data);
-            })
-            .catch(error => {
-                console.error('Hubo un error al obtener los movimientos:', error);
-            });
-    }, []);
+        if (isAuthenticated) {
+            axios.get('http://localhost:5000/api/products')
+                .then(response => {
+                    setProducts(response.data);
+                })
+                .catch(error => {
+                    console.error('Hubo un error al obtener los productos:', error);
+                });
+        }
+    }, [isAuthenticated]);
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            axios.get('http://localhost:5000/api/movements')
+                .then(response => {
+                    setMovements(response.data);
+                })
+                .catch(error => {
+                    console.error('Hubo un error al obtener los movimientos:', error);
+                });
+        }
+    }, [isAuthenticated]);
 
     const handleProductAdded = (newProduct) => {
         setProducts([...products, newProduct]);
@@ -45,7 +49,7 @@ function App() {
         setProducts(products.map(product =>
             product.id === updatedProduct.id ? updatedProduct : product
         ));
-        setProductToEdit(null); // Resetea el producto a editar
+        setProductToEdit(null);
     };
 
     const handleEditProduct = (product) => {
@@ -55,7 +59,6 @@ function App() {
     const handleMovementAdded = (newMovement) => {
         setMovements([...movements, newMovement]);
 
-        // Actualizar la cantidad del producto afectado
         const updatedProducts = products.map(product => {
             if (product.id === newMovement.productId) {
                 const updatedQuantity = newMovement.type === 'entrada'
@@ -73,8 +76,14 @@ function App() {
     return (
         <Router>
             <Routes>
+                {/* Ruta para el login */}
                 <Route path="/login" element={<Login />} />
-                <Route path="/" element={
+
+                {/* Redirigir a login si el usuario no está autenticado */}
+                <Route path="/" element={<Navigate to="/login" />} />
+
+                {/* Rutas protegidas para el dashboard */}
+                <Route path="/dashboard" element={
                     <PrivateRoute>
                         <div className="App">
                             <h1>Sistema de Gestión de Inventario</h1>

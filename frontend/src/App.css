@@ -124,112 +124,84 @@ button[type="submit"]:hover {
 
 /*LOGIN*/
 
+/* Centrar el contenedor de login en la pantalla */
 .login-container {
-  max-width: 400px;
-  margin: 50px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: #f0f2f5; /* Fondo suave para toda la pantalla */
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #f9f9f9;
 }
 
-.login-container h2 {
+/* Estilo para el cuadro de login */
+.login-box {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra ligera para darle profundidad */
+  width: 100%;
+  max-width: 400px; /* Máximo ancho para no estirarse demasiado */
+}
+
+/* Estilo para el título */
+.login-box h2 {
   text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+/* Estilos para el formulario */
+.login-box .form-group {
   margin-bottom: 20px;
 }
 
-.login-container form div {
-  margin-bottom: 15px;
-}
-
-.login-container label {
+.login-box label {
+  font-weight: bold;
   display: block;
   margin-bottom: 5px;
+  color: #555;
 }
 
-.login-container input {
+.login-box input[type="text"],
+.login-box input[type="password"] {
   width: 100%;
-  padding: 8px;
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 16px;
   box-sizing: border-box;
 }
 
-.login-container button {
+.login-box input[type="text"]:focus,
+.login-box input[type="password"]:focus {
+  border-color: #007bff; /* Color de borde cuando está en foco */
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Sombra azul suave al enfocar */
+}
+
+/* Estilo para el botón */
+.login-box .login-button {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   background-color: #007bff;
-  color: white;
   border: none;
   border-radius: 5px;
+  color: white;
+  font-size: 16px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.login-container button:hover {
-  background-color: #0056b3;
+.login-box .login-button:hover {
+  background-color: #0056b3; /* Un tono más oscuro al pasar el mouse */
 }
 
-.login-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background-color: #f4f6f9;
+/* Mensaje de error */
+.login-box p {
+  color: red;
+  text-align: center;
+  margin-bottom: 15px;
+  font-weight: bold;
 }
-
-.login-box {
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
-    width: 100%;
-}
-
-h2 {
-    text-align: center;
-    color: #333;
-    margin-bottom: 20px;
-}
-
-.form-group {
-    margin-bottom: 15px;
-}
-
-.form-group label {
-    display: block;
-    font-weight: bold;
-    margin-bottom: 5px;
-    color: #555;
-}
-
-.form-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
-    box-sizing: border-box;
-}
-
-.login-button {
-    width: 100%;
-    padding: 10px;
-    background-color: #007bff;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-.login-button:hover {
-    background-color: #0056b3;
-}
-
-.error-message {
-    color: red;
-    font-size: 14px;
-    margin-bottom: 10px;
-    text-align: center;
-}
-

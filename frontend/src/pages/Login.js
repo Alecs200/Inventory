@@ -1,29 +1,26 @@
-import React, { useState } from 'react'; // Asegúrate de importar useState
-import { useNavigate } from 'react-router-dom'; // Asegúrate de importar useNavigate
-import axios from 'axios'; // Asegúrate de importar axios
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Login = () => {
-    const [username, setUsername] = useState(''); // Usa useState para controlar el estado de username
-    const [password, setPassword] = useState(''); // Usa useState para controlar el estado de password
-    const [error, setError] = useState(''); // Usa useState para controlar el estado del mensaje de error
-    const navigate = useNavigate(); // Usa useNavigate para redirigir al usuario después del login
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const navigate = useNavigate();
 
     const handleLogin = (event) => {
         event.preventDefault();
-
-        // Petición POST al backend para la autenticación
+        
         axios.post('http://localhost:5000/api/login', { username, password })
             .then(response => {
                 if (response.data.success) {
-                    // Guardar el token en localStorage y redirigir a la página principal
                     localStorage.setItem('token', response.data.token);
-                    navigate('/'); // Redirige a la página principal
+                    navigate('/dashboard');  // Redirige al dashboard después de iniciar sesión
                 } else {
                     setError('Usuario o contraseña incorrectos');
                 }
             })
-            .catch(error => {
-                console.error('Error al intentar iniciar sesión:', error);
+            .catch(() => {
                 setError('Error en el servidor. Por favor, intenta más tarde.');
             });
     };
@@ -52,7 +49,7 @@ const Login = () => {
                             required
                         />
                     </div>
-                    <button type="submit" className="login-button">Iniciar Sesión</button>
+                    <button type="submit">Iniciar Sesión</button>
                 </form>
             </div>
         </div>
